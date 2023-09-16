@@ -1,39 +1,14 @@
-import { useState } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import ShoppingCart from './pages/ShoppingCart';
 
 function App() {
-  const [search, setSearch] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
   return (
-    <div className="App">
-      <main className="search-container">
-
-        <form className="search-form">
-          <input
-            className="search-input"
-            type="text"
-            name="search"
-            value={ search }
-            onChange={ handleChange }
-          />
-        </form>
-
-        <div className="search-result">
-          {search ? (
-            <h2>Resultado</h2>
-          ) : (
-            <p data-testid="home-initial-message">
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
-          )}
-        </div>
-
-      </main>
-    </div>
+    <Routes>
+      <Route path="/" element={ <Home /> } />
+      <Route path="/shoppingcart" element={ <ShoppingCart /> } />
+    </Routes>
   );
 }
 
