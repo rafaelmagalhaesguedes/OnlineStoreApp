@@ -1,9 +1,31 @@
 export async function getCategories() {
-  // Implemente aqui
+  const APICategories = 'https://api.mercadolibre.com/sites/MLB/categories';
+  try {
+    const response = await fetch(APICategories);
+    if (!response) {
+      throw new Error('Error fectching data!');
+    }
+    const categorie = await response.json();
+    // console.log(data);
+    return categorie;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-export async function getProductsFromCategoryAndQuery(/* categoryId, query */) {
-  // Implemente aqui! Quando o fizer, descomente os parâmetros que essa função recebe
+export async function getProductsFromCategoryAndQuery(categoryId: string, query: string) {
+  const APISearch = `https://api.mercadolibre.com/sites/MLB/${query}?category=${categoryId}`;
+  try {
+    const response = await fetch(APISearch);
+    if (!response) {
+      throw new Error('Error fectching data!');
+    }
+    const search = await response.json();
+    console.log(search);
+    return search;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getProductById() {
