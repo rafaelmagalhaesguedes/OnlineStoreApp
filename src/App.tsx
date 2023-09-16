@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
-import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 
 function App() {
-  getCategories();
-  getProductsFromCategoryAndQuery();
+  const [search, setSearch] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>Edit src/App.js and save to reload.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main className="search-container">
+
+        <form className="search-form">
+          <input
+            className="search-input"
+            type="text"
+            name="search"
+            value={ search }
+            onChange={ handleChange }
+          />
+        </form>
+
+        <div className="search-result">
+          {search ? (
+            <h2>Resultado</h2>
+          ) : (
+            <p data-testid="home-initial-message">
+              Digite algum termo de pesquisa ou escolha uma categoria.
+            </p>
+          )}
+        </div>
+
+      </main>
     </div>
   );
 }
