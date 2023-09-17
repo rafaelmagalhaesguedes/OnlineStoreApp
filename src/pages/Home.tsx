@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductByQuery } from '../services/api';
-import { ProductType } from '../types';
+import { getCategories, getProductByQuery, getProductById } from '../services/api';
+import { ProductType, CategoryType } from '../types';
 import ProductCard from '../components/ProductCard';
 import iconCart from '../images/icon-shopping-cart.png';
 import './home.css';
@@ -10,7 +10,7 @@ function Home() {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<ProductType[]>([]);
   const [resultState, setResultState] = useState(false);
-  const [/* categories */, setCategories] = useState([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -20,9 +20,13 @@ function Home() {
     const result = await getProductByQuery(search);
     setResults(result.results);
     console.log(result);
-    if (result) {
-      setResultState(true);
-    }
+    if (result) setResultState(true);
+  };
+
+  const handleSubmitCategory = async (id: string) => {
+    const product = await getProductById(id);
+    setResults(product.results);
+    if (product) setResultState(true);
   };
 
   useEffect(() => {
@@ -37,20 +41,22 @@ function Home() {
     <main>
       <aside className="search-categories">
         <h2>Categorias</h2>
-        <div>
-          <label data-testid="category" htmlFor="categoria1"> Categoria 1</label>
-          <input type="radio" id="categoria1" />
-        </div>
-
-        <div>
-          <label data-testid="category" htmlFor="categoria1"> Categoria 2</label>
-          <input type="radio" id="categoria2" />
-        </div>
-
-        <div>
-          <label data-testid="category" htmlFor="categoria1"> Categoria 3</label>
-          <input type="radio" id="categoria3" />
-        </div>
+        {categories.map((categorie) => (
+          <div key={ categorie.id }>
+            <label data-testid="category" htmlFor={ categorie.id }>
+              <input
+                type="radio"
+                id={ categorie.id }
+                name={ categorie.name }
+                onChange={ (e) => {
+                  e.preventDefault();
+                  handleSubmitCategory(categorie.id);
+                } }
+              />
+              { categorie.name }
+            </label>
+          </div>
+        ))}
       </aside>
 
       <section>

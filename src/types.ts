@@ -4,3 +4,8 @@ export type ProductType = {
   thumbnail: string,
   price: number,
 };
+
+export type CategoryType = {
+  id: string,
+  name: string,
+};
