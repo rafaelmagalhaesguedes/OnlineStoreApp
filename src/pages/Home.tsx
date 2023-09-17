@@ -1,15 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './home.css';
+import { getCategories, getProductByQuery } from '../services/api';
+import { ProductType } from '../types';
+import ProductCard from '../components/ProductCard';
 import iconCart from '../images/icon-shopping-cart.png';
-import { getCategories } from '../services/api';
+import './home.css';
 
 function Home() {
   const [search, setSearch] = useState('');
-  const [categories, setCategories] = useState([]);
+  const [results, setResults] = useState<ProductType[]>([]);
+  const [resultState, setResultState] = useState(false);
+  const [/* categories */, setCategories] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const result = await getProductByQuery(search);
+    setResults(result.results);
+    console.log(result);
+    if (result) {
+      setResultState(true);
+    }
   };
 
   useEffect(() => {
@@ -44,12 +57,23 @@ function Home() {
         <div className="search-form">
           <form>
             <input
-              className="search-input"
+              data-testid="query-input"
+              className="form-input"
               type="text"
               name="search"
               value={ search }
               onChange={ handleChange }
             />
+            <button
+              data-testid="query-button"
+              onClick={ (e) => {
+                e.preventDefault();
+                handleSubmit();
+              } }
+            >
+              Procurar
+            </button>
+
           </form>
 
           <Link
@@ -65,15 +89,34 @@ function Home() {
           </Link>
         </div>
 
+        {results.length === 0 && (
+          <p className="initial-message" data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+        )}
+
         <div className="search-result">
-          {search ? (
-            <h2>Resultado</h2>
+          {results.length > 0 ? (
+            <div>
+              {results.map((prod) => (
+                <div data-testid="product" key={ prod.id }>
+                  <ProductCard
+                    title={ prod.title }
+                    thumbnail={ prod.thumbnail }
+                    price={ prod.price }
+                  />
+                </div>
+              ))}
+            </div>
           ) : (
-            <p className="initial-message" data-testid="home-initial-message">
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
+            <div
+              style={ { display: resultState === false ? 'none' : 'block' } }
+            >
+              <p className="search-error-message">Nenhum produto foi encontrado</p>
+            </div>
           )}
         </div>
+
       </section>
     </main>
   );
