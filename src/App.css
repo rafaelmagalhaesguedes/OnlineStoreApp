@@ -4,26 +4,3 @@
   margin: 0;
   padding: 0;
 }
-
-main {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-nav {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 5rem;
-  justify-content: center;
-  margin: 10px 0;
-  width: 100%;
-}
-
-.icon-shopping-cart {
-  height: auto;
-  width: 50px;
-}
-
