@@ -15,7 +15,9 @@ function Home() {
   const [results, setResults] = useState<ProductType[]>([]);
   const [resultState, setResultState] = useState(false);
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [cart, setCart] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(false);
+  let nextProductId = 1;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -39,6 +41,14 @@ function Home() {
       setResultState(true);
       setLoading(false);
     }
+  };
+
+  const handleAddCart = (product: ProductType) => {
+    product.id = String(nextProductId);
+    const updateCart = [...cart, product];
+    setCart(updateCart);
+    nextProductId++;
+    localStorage.setItem('cart', JSON.stringify(updateCart));
   };
 
   useEffect(() => {
@@ -98,10 +108,9 @@ function Home() {
 
           <Link
             to="/shoppingcart"
-            className="button-edit-profile"
+            data-testid="shopping-cart-button"
           >
             <img
-              data-testid=""
               className="icon-shopping-cart"
               src={ iconCart }
               alt="Link Shopping Cart"
@@ -123,6 +132,17 @@ function Home() {
                   <ProductCard
                     productData={ prod }
                   />
+
+                  <button
+                    data-testid="product-add-to-cart"
+                    className="button-add-cart"
+                    onClick={ (e) => {
+                      e.preventDefault();
+                      handleAddCart(prod);
+                    } }
+                  >
+                    Adicionar ao Carrinho
+                  </button>
                 </div>
               ))}
             </div>

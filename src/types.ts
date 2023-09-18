@@ -3,6 +3,7 @@ export type ProductType = {
   title: string,
   thumbnail: string,
   price: number,
+  available_quantity: number,
   attributes: AttributeType[];
 };
 

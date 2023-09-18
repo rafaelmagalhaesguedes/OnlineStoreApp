@@ -7,6 +7,7 @@ type ProductCardProps = {
 
 function ProductCard({ productData } : ProductCardProps) {
   const { id, title, thumbnail, price } = productData;
+
   return (
     <div>
       <Link to={ `/productdetails/${id}` } data-testid="product-detail-link">
