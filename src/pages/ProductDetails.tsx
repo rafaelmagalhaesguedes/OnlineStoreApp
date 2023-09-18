@@ -8,6 +8,16 @@ import iconCart from '../images/icon-shopping-cart.png';
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductType>();
+  const [myCart, setMyCart] = useState<ProductType[]>([]);
+  let nextId = 1;
+
+  const handleAddToCart = (objProduct: ProductType) => {
+    objProduct.id = String(nextId);
+    const updateCart = [...myCart, objProduct];
+    setMyCart(updateCart);
+    nextId++;
+    localStorage.setItem('cart', JSON.stringify(updateCart));
+  };
 
   useEffect(() => {
     const fetchProductsId = async () => {
@@ -33,9 +43,18 @@ function ProductDetails() {
       {product ? (
         <>
           <section>
-            <li data-testid="product-detail-name">{product.title}</li>
-            <li data-testid="product-detail-image">{product.thumbnail}</li>
-            <li data-testid="product-detail-price">{product.price}</li>
+            <div className="product-details">
+              <p data-testid="product-detail-name">{product.title}</p>
+              <p data-testid="product-detail-image">{product.thumbnail}</p>
+              <p data-testid="product-detail-price">{product.price}</p>
+            </div>
+
+            <button
+              data-testid="product-detail-add-to-cart"
+              onClick={ () => handleAddToCart(product) }
+            >
+              Adicionar
+            </button>
           </section>
           <section>
             <h3>Descrição</h3>
