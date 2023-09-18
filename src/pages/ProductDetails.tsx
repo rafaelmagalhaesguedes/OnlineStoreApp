@@ -45,7 +45,9 @@ function ProductDetails() {
           <section>
             <div className="product-details">
               <p data-testid="product-detail-name">{product.title}</p>
-              <p data-testid="product-detail-image">{product.thumbnail}</p>
+              <p data-testid="product-detail-image">
+                <img src={ product.thumbnail } alt={ product.title } />
+              </p>
               <p data-testid="product-detail-price">{product.price}</p>
             </div>
 

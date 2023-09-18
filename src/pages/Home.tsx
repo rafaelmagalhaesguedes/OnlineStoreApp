@@ -17,7 +17,6 @@ function Home() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [cart, setCart] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(false);
-  let nextProductId = 1;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -44,10 +43,8 @@ function Home() {
   };
 
   const handleAddCart = (product: ProductType) => {
-    product.id = String(nextProductId);
     const updateCart = [...cart, product];
     setCart(updateCart);
-    nextProductId++;
     localStorage.setItem('cart', JSON.stringify(updateCart));
   };
 
