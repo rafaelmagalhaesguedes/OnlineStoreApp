@@ -1,23 +1,27 @@
+import { Link } from 'react-router-dom';
+import { ProductType } from '../types';
+
 type ProductCardProps = {
-  title: string,
-  thumbnail: string,
-  price: number,
+  productData: ProductType,
 };
 
-function ProductCard({ title, thumbnail, price } : ProductCardProps) {
+function ProductCard({ productData } : ProductCardProps) {
+  const { id, title, thumbnail, price } = productData;
   return (
     <div>
-      <p>
-        {title}
-      </p>
-      <p>
-        <img src={ thumbnail } alt={ title } />
-      </p>
-      <p>
-        R$:
-        {' '}
-        {price}
-      </p>
+      <Link to={ `/productdetails/${id}` } data-testid="product-detail-link">
+        <p>
+          {title}
+        </p>
+        <p>
+          <img src={ thumbnail } alt={ title } />
+        </p>
+        <p>
+          R$:
+          {' '}
+          {price}
+        </p>
+      </Link>
     </div>
   );
 }

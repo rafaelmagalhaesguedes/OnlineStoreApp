@@ -1,32 +1,44 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductByQuery, getProductById } from '../services/api';
 import { ProductType, CategoryType } from '../types';
 import ProductCard from '../components/ProductCard';
 import iconCart from '../images/icon-shopping-cart.png';
 import './home.css';
+import {
+  getCategories,
+  getProductByQuery,
+  getCategoryById,
+} from '../services/api';
 
 function Home() {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<ProductType[]>([]);
   const [resultState, setResultState] = useState(false);
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const result = await getProductByQuery(search);
     setResults(result.results);
-    console.log(result);
-    if (result) setResultState(true);
+    if (result) {
+      setResultState(true);
+      setLoading(false);
+    }
   };
 
   const handleSubmitCategory = async (id: string) => {
-    const product = await getProductById(id);
+    setLoading(true);
+    const product = await getCategoryById(id);
     setResults(product.results);
-    if (product) setResultState(true);
+    if (product) {
+      setResultState(true);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -36,6 +48,8 @@ function Home() {
     };
     fetchApiCategories();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <main>
@@ -107,9 +121,7 @@ function Home() {
               {results.map((prod) => (
                 <div data-testid="product" key={ prod.id }>
                   <ProductCard
-                    title={ prod.title }
-                    thumbnail={ prod.thumbnail }
-                    price={ prod.price }
+                    productData={ prod }
                   />
                 </div>
               ))}
