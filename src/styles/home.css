@@ -11,20 +11,6 @@ main {
   width: 100%;
 }
 
-aside {
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  margin: 10px 30px;
-  padding: 20px;
-  width: 20%;
-}
-
-aside > div {
-  margin: 10px;
-}
-
 label, input {
   cursor: pointer;
 }

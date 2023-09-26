@@ -1,4 +1,5 @@
 import { CategoryType } from '../../types';
+import { Aside, CardCategory, Divider, Input, Label, Title } from './Styles';
 
 type CategoryProps = {
   categories: CategoryType[],
@@ -7,12 +8,13 @@ type CategoryProps = {
 
 function Category({ categories, searchByCategory } : CategoryProps) {
   return (
-    <aside className="search-categories">
-      <h2>Categorias</h2>
+    <Aside>
+      <Title>Categorias</Title>
+      <Divider />
       {categories.map(({ id, name }) => (
-        <div key={ id }>
-          <label data-testid="category" htmlFor={ id }>
-            <input
+        <CardCategory key={ id }>
+          <Label data-testid="category" htmlFor={ id }>
+            <Input
               type="radio"
               id={ id }
               name={ name }
@@ -21,11 +23,12 @@ function Category({ categories, searchByCategory } : CategoryProps) {
                 searchByCategory(id);
               } }
             />
+            {' '}
             { name }
-          </label>
-        </div>
+          </Label>
+        </CardCategory>
       ))}
-    </aside>
+    </Aside>
   );
 }
 
