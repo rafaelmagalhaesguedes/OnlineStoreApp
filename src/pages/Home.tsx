@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ProductType, CategoryType } from '../types';
 import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
+import Loading from '../components/Loading/Loading';
 import '../styles/home.css';
 import {
   getCategories,
@@ -106,7 +107,7 @@ function Home() {
         )}
 
         {loading ? (
-          <p>Carregando...</p>
+          <Loading />
         ) : (
           <SearchResult>
             {results.length > 0 ? (

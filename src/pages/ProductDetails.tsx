@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductById } from '../services/api';
 import { ProductType } from '../types';
-import iconCart from '../images/icon-cart.jpg';
+import iconCart from '../images/cart.png';
 
 //
 function ProductDetails() {
