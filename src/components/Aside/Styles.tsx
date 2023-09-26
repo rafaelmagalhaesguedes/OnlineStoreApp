@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const AsideCategory = styled.aside`
+  background-color: white;
+  box-shadow: 3px 3px 6px 0px #0000000D;
   display: flex;
   flex-direction: column;
   height: auto;
-  margin: 0 10px;
-  padding: 20px;
-  width: 20%;
+  padding: 30px;
+  width: 23%;
 `;
 
 export const Title = styled.h2`

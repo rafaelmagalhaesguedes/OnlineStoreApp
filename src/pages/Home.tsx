@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ProductType, CategoryType } from '../types';
 import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
-import iconCart from '../images/icon-cart.jpg';
 import '../styles/home.css';
 import {
   getCategories,
   getProductByQuery,
   getCategoryById,
 } from '../services/api';
+import {
+  InitialMessage,
+  Main,
+  Section,
+  Title,
+  TextMessage,
+  SearchResult,
+  Product,
+  Button,
+} from '../components/Home/Styles';
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -57,16 +65,14 @@ function Home() {
     fetchApiCategories();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <main>
+    <Main>
       <Aside
         categories={ categories }
         searchByCategory={ handleSearchByCategory }
       />
 
-      <section>
+      <Section>
         <div className="search-form">
           <form>
             <input
@@ -88,58 +94,53 @@ function Home() {
             </button>
 
           </form>
-
-          <Link
-            to="/shoppingcart"
-            data-testid="shopping-cart-button"
-          >
-            <img
-              className="icon-shopping-cart"
-              src={ iconCart }
-              alt="Link Shopping Cart"
-            />
-          </Link>
         </div>
 
-        {results.length === 0 && (
-          <p className="initial-message" data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
+        {results.length === 0 && !loading && (
+          <InitialMessage data-testid="home-initial-message">
+            <Title>Você ainda não realizou uma busca</Title>
+            <TextMessage>
+              Digite algum termo de pesquisa ou escolha uma categoria
+            </TextMessage>
+          </InitialMessage>
         )}
 
-        <div className="search-result">
-          {results.length > 0 ? (
-            <div>
-              {results.map((prod) => (
-                <div data-testid="product" key={ prod.id }>
-                  <ProductCard
-                    productData={ prod }
-                  />
+        {loading ? (
+          <p>Carregando...</p>
+        ) : (
+          <SearchResult>
+            {results.length > 0 ? (
+              <>
+                {results.map((prod) => (
+                  <Product data-testid="product" key={ prod.id }>
+                    <ProductCard
+                      productData={ prod }
+                    />
 
-                  <button
-                    data-testid="product-add-to-cart"
-                    className="button-add-cart"
-                    onClick={ (e) => {
-                      e.preventDefault();
-                      handleAddCart(prod);
-                    } }
-                  >
-                    Adicionar ao Carrinho
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div
-              style={ { display: resultState === false ? 'none' : 'block' } }
-            >
-              <p className="search-error-message">Nenhum produto foi encontrado</p>
-            </div>
-          )}
-        </div>
+                    <Button
+                      data-testid="product-add-to-cart"
+                      onClick={ (e) => {
+                        e.preventDefault();
+                        handleAddCart(prod);
+                      } }
+                    >
+                      Adicionar ao Carrinho
+                    </Button>
+                  </Product>
+                ))}
+              </>
+            ) : (
+              <div
+                style={ { display: resultState === false ? 'none' : 'block' } }
+              >
+                <p className="search-error-message">Nenhum produto foi encontrado</p>
+              </div>
+            )}
+          </SearchResult>
+        )}
 
-      </section>
-    </main>
+      </Section>
+    </Main>
   );
 }
 
