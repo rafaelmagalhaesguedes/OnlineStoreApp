@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductType, CategoryType } from '../types';
 import ProductCard from '../components/ProductCard';
-import iconCart from '../images/icon-shopping-cart.png';
-import './home.css';
+import iconCart from '../images/icon-cart.jpg';
+import '../styles/home.css';
 import {
   getCategories,
   getProductByQuery,
@@ -22,7 +22,7 @@ function Home() {
     setSearch(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSearchProduct = async () => {
     setLoading(true);
     const result = await getProductByQuery(search);
     setResults(result.results);
@@ -32,7 +32,7 @@ function Home() {
     }
   };
 
-  const handleSubmitCategory = async (id: string) => {
+  const handleSearchByCategory = async (id: string) => {
     setLoading(true);
     const product = await getCategoryById(id);
     setResults(product.results);
@@ -71,7 +71,7 @@ function Home() {
                 name={ categorie.name }
                 onChange={ (e) => {
                   e.preventDefault();
-                  handleSubmitCategory(categorie.id);
+                  handleSearchByCategory(categorie.id);
                 } }
               />
               { categorie.name }
@@ -95,7 +95,7 @@ function Home() {
               data-testid="query-button"
               onClick={ (e) => {
                 e.preventDefault();
-                handleSubmit();
+                handleSearchProduct();
               } }
             >
               Procurar
