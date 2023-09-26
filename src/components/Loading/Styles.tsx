@@ -13,15 +13,15 @@ export const Spinner = styled.section`
   gap: 10px;
   position: relative;
   padding-top: 150px;
-  margin-left: 100px;
+  margin-left: 120px;
 `;
 
 export const IconSpinner = styled.span`
   animation: ${spin} 3s linear infinite;
   background-color: transparent;
   background-image: url(${iconSpinner});
-  height: 200px;
-  width: 200px;
+  height: 80px;
+  width: 80px;
 `;
 
 export const TextSpinner = styled.p`
