@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const Aside = styled.aside`
+export const AsideCategory = styled.aside`
   display: flex;
   flex-direction: column;
   height: auto;
-  margin: 10px 10px;
+  margin: 0 10px;
   padding: 20px;
   width: 20%;
 `;

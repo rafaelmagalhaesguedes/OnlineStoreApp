@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductType, CategoryType } from '../types';
-import Category from '../components/Category/Category';
+import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
 import iconCart from '../images/icon-cart.jpg';
 import '../styles/home.css';
@@ -61,7 +61,7 @@ function Home() {
 
   return (
     <main>
-      <Category
+      <Aside
         categories={ categories }
         searchByCategory={ handleSearchByCategory }
       />

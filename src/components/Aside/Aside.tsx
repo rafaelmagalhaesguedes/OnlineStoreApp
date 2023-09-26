@@ -1,14 +1,14 @@
 import { CategoryType } from '../../types';
-import { Aside, CardCategory, Divider, Input, Label, Title } from './Styles';
+import { AsideCategory, CardCategory, Divider, Input, Label, Title } from './Styles';
 
 type CategoryProps = {
   categories: CategoryType[],
   searchByCategory: (id: string) => void;
 };
 
-function Category({ categories, searchByCategory } : CategoryProps) {
+function Aside({ categories, searchByCategory } : CategoryProps) {
   return (
-    <Aside>
+    <AsideCategory>
       <Title>Categorias</Title>
       <Divider />
       {categories.map(({ id, name }) => (
@@ -28,8 +28,8 @@ function Category({ categories, searchByCategory } : CategoryProps) {
           </Label>
         </CardCategory>
       ))}
-    </Aside>
+    </AsideCategory>
   );
 }
 
-export default Category;
+export default Aside;
