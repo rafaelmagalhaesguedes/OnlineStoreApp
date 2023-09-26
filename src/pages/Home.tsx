@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductType, CategoryType } from '../types';
-import ProductCard from '../components/ProductCard';
+import Category from '../components/Category/Category';
+import ProductCard from '../components/ProductCard/ProductCard';
 import iconCart from '../images/icon-cart.jpg';
 import '../styles/home.css';
 import {
@@ -60,25 +61,10 @@ function Home() {
 
   return (
     <main>
-      <aside className="search-categories">
-        <h2>Categorias</h2>
-        {categories.map((categorie) => (
-          <div key={ categorie.id }>
-            <label data-testid="category" htmlFor={ categorie.id }>
-              <input
-                type="radio"
-                id={ categorie.id }
-                name={ categorie.name }
-                onChange={ (e) => {
-                  e.preventDefault();
-                  handleSearchByCategory(categorie.id);
-                } }
-              />
-              { categorie.name }
-            </label>
-          </div>
-        ))}
-      </aside>
+      <Category
+        categories={ categories }
+        searchByCategory={ handleSearchByCategory }
+      />
 
       <section>
         <div className="search-form">
