@@ -12,7 +12,7 @@ export const searchFailure = (error: string) => (
   { type: 'SEARCH_ERROR', error }
 );
 
-export function fetchCharacter(query: string) {
+export function fetchSearchQuery(query: string) {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(searchBegin());

@@ -1,8 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import LogoImage from '../../images/logo.png';
 import iconCart from '../../images/cart.png';
+import { fetchSearchQuery } from '../../redux/actions';
+import { Dispatch } from '../../types';
 import {
   HeaderContainer,
   Input,
@@ -13,23 +16,13 @@ import {
   IconSearch,
   IconCart,
 } from './Styles';
-import { setSearchQuery } from '../../redux/actions';
-import { RootState } from '../../redux/store';
-import { getProductByQuery } from '../../services/api';
 
 function Header() {
-  const dispatch = useDispatch();
-  const searchQuery = useSelector((state: RootState) => state.app.searchQuery);
+  const dispatch: Dispatch = useDispatch();
+  const [search, setSearch] = useState('');
 
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    dispatch(setSearchQuery(query)); // Define o novo valor de pesquisa no estado
-
-    // Faça a pesquisa com o novo valor de consulta
-    const result = await getProductByQuery(query);
-
-    // Agora, despache a ação para definir os resultados de pesquisa no estado
-    dispatch(setSearchQuery(result.results));
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(target.value);
   };
 
   return (
@@ -38,9 +31,15 @@ function Header() {
         <Input
           type="text"
           placeholder="Pesquisar"
-          value={ searchQuery } // Defina o valor do campo de pesquisa
-          onChange={ handleSearchChange }
+          value={ search }
+          onChange={ handleChange }
         />
+        <button
+          type="button"
+          onClick={ () => dispatch(fetchSearchQuery(search)) }
+        >
+          Search
+        </button>
         <IconSearch icon={ faSearch } />
       </Search>
       <Logo>
