@@ -54,6 +54,7 @@ export const ButtonAddCart = styled.button`
   background: #31C28D;
   border: none;
   color: white;
+  cursor: pointer;
   font-size: 16px;
   font-weight: 600;
   line-height: 16px;
