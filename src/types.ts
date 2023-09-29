@@ -27,10 +27,7 @@ export type InitialStateType = {
 };
 
 export type GlobalStateType = {
-  searchReducer: {
-    data: ProductType[] | null,
-    isLoading: boolean,
-  }
+  searchReducer: InitialStateType,
 };
 
 export type Dispatch = ThunkDispatch<GlobalStateType, null, AnyAction>;

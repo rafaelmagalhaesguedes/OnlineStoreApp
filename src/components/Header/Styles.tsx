@@ -11,11 +11,24 @@ export const HeaderContainer = styled.header`
   width: 100%;
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+`;
+
+export const FormHeader = styled.form`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Input = styled.input`
-  width: 15rem;
+  width: 30rem;
   height: 35px;
   border: none;
-  padding: 0 10px;
+  padding: 0 40px;
+  font-size: 1.1rem;
 
   &:focus {
     outline: 0;
@@ -32,15 +45,32 @@ export const Input = styled.input`
 export const IconSearch = styled(FontAwesomeIcon)`
   color: #2FC18C;
   position: absolute;
-  width: 28rem;
+  padding: 8px;
   cursor: pointer;
 `;
 
-export const Logo = styled.div``;
+export const ButtonSearch = styled.button`
+  padding: 0 30px;
+  border: 1px solid #25aa79;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background-color: #25aa79;
+`;
+
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 30px;
+`;
 
 export const Image = styled.img``;
 
-export const Nav = styled.nav``;
+export const Nav = styled.nav`
+`;
 
 export const IconCart = styled.img`
   width: 40px;

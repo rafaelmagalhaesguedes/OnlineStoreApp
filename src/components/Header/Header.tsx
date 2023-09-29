@@ -14,6 +14,9 @@ import {
   Nav,
   IconSearch,
   IconCart,
+  FormHeader,
+  ButtonSearch,
+  Wrapper,
 } from './Styles';
 
 function Header() {
@@ -31,24 +34,26 @@ function Header() {
 
   return (
     <HeaderContainer>
-      <form>
-        <Input
-          type="text"
-          name="search"
-          value={ search }
-          onChange={ handleChange }
-          placeholder="Pesquisar"
-        />
-        <IconSearch icon={ faSearch } />
-        <button
-          onClick={ handleSubmit }
-        >
-          Buscar
-        </button>
-      </form>
       <Logo>
         <Image src={ LogoImage } alt="Logo" />
       </Logo>
+      <Wrapper>
+        <FormHeader>
+          <Input
+            type="text"
+            name="search"
+            value={ search }
+            onChange={ handleChange }
+            placeholder="Pesquisar"
+          />
+          <IconSearch icon={ faSearch } />
+          <ButtonSearch
+            onClick={ handleSubmit }
+          >
+            Pesquisar
+          </ButtonSearch>
+        </FormHeader>
+      </Wrapper>
       <Nav>
         <NavLink to="/shoppingcart">
           <IconCart src={ iconCart } alt="" />

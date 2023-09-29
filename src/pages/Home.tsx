@@ -21,7 +21,9 @@ import {
 } from '../components/Home/Styles';
 
 function Home() {
-  const { data, isLoading } = useSelector((state: GlobalStateType) => state);
+  const { data, isLoading } = useSelector(
+    (state: GlobalStateType) => state,
+  );
   /* const [categories, setCategories] = useState<CategoryType[]>([]);
   const [searchCategory, setSearchCategory] = useState<CategoryType[]>([]); */
   const [cart, setCart] = useState<ProductType[]>([]);
