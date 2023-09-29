@@ -1,13 +1,13 @@
-import { /* useEffect */ useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ProductType, /* CategoryType */ GlobalStateType } from '../types';
-/* import Aside from '../components/Aside/Aside'; */
+import { ProductType, CategoryType, GlobalStateType } from '../types';
+import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Loading from '../components/Loading/Loading';
 import '../styles/home.css';
 import {
-/* getCategories,
-  getCategoryById, */
+  getCategories,
+  getCategoryById,
 } from '../services/api';
 import {
   InitialMessage,
@@ -21,9 +21,8 @@ import {
 } from '../components/Home/Styles';
 
 function Home() {
-  const { data, isLoading } = useSelector(
-    (state: GlobalStateType) => state,
-  );
+  const { data, isLoading } = useSelector((state: GlobalStateType) => state);
+  const [state, setState] = useState(false);
   /* const [categories, setCategories] = useState<CategoryType[]>([]);
   const [searchCategory, setSearchCategory] = useState<CategoryType[]>([]); */
   const [cart, setCart] = useState<ProductType[]>([]);
@@ -55,9 +54,9 @@ function Home() {
       {/* <Aside
         categories={ categories }
         searchByCategory={ handleSearchByCategory }
-      /> */}
+      />
 
-      {/* <section>
+      <section>
         {!loading && searchCategory.length > 0 ? (
           <>
             {searchCategory.map((element) => (
@@ -94,9 +93,10 @@ function Home() {
                   <Product data-testid="product" key={ prod.id }>
                     <ProductCard
                       productData={ prod }
+                      addCart={ handleAddCart }
                     />
 
-                    <Button
+                    {/* <Button
                       data-testid="product-add-to-cart"
                       onClick={ (e) => {
                         e.preventDefault();
@@ -104,12 +104,14 @@ function Home() {
                       } }
                     >
                       Adicionar ao Carrinho
-                    </Button>
+                    </Button> */}
                   </Product>
                 ))}
               </>
             ) : (
-              <div>
+              <div
+                style={ { display: state === false ? 'none' : 'block' } }
+              >
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}

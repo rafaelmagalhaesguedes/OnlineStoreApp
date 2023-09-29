@@ -1,29 +1,36 @@
-import { Link } from 'react-router-dom';
 import { ProductType } from '../../types';
+import { ButtonAddCart, Card, Image, LinkCard, Price } from './Styles';
 
 type ProductCardProps = {
   productData: ProductType,
+  addCart: (productData: ProductType) => void;
 };
 
-function ProductCard({ productData } : ProductCardProps) {
+function ProductCard({ productData, addCart } : ProductCardProps) {
   const { id, title, thumbnail, price } = productData;
 
   return (
-    <div>
-      <Link to={ `/productdetails/${id}` } data-testid="product-detail-link">
-        <p>
-          {title}
-        </p>
-        <p>
-          <img src={ thumbnail } alt={ title } />
-        </p>
-        <p>
-          R$:
-          {' '}
-          {price}
-        </p>
-      </Link>
-    </div>
+    <Card>
+      <Image src={ thumbnail } alt={ title } />
+      <LinkCard to={ `/productdetails/${id}` } data-testid="product-detail-link">
+        <p>{title}</p>
+      </LinkCard>
+      <Price>
+        <span>R$</span>
+        {' '}
+        {price}
+      </Price>
+
+      <ButtonAddCart
+        data-testid="product-add-to-cart"
+        onClick={ (e) => {
+          e.preventDefault();
+          addCart(productData);
+        } }
+      >
+        Adicionar ao Carrinho
+      </ButtonAddCart>
+    </Card>
   );
 }
 
