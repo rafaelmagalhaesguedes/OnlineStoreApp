@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ProductType, CategoryType } from '../types';
+import { useSelector } from 'react-redux';
+import { ProductType, CategoryType, GlobalStateType } from '../types';
 import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Loading from '../components/Loading/Loading';
 import '../styles/home.css';
 import {
   getCategories,
-  getProductByQuery,
   getCategoryById,
 } from '../services/api';
 import {
@@ -21,35 +21,18 @@ import {
 } from '../components/Home/Styles';
 
 function Home() {
-  const [search, setSearch] = useState('');
-  const [results, setResults] = useState<ProductType[]>([]);
-  const [resultState, setResultState] = useState(false);
+  const rootState = useSelector((state: GlobalStateType) => state.searchReducer);
+  const { data, isLoading } = rootState;
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [searchCategory, setSearchCategory] = useState<CategoryType[]>([]);
   const [cart, setCart] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  const handleSearchProduct = async () => {
-    setLoading(true);
-    const result = await getProductByQuery(search);
-    setResults(result.results);
-    if (result) {
-      setResultState(true);
-      setLoading(false);
-    }
-  };
 
   const handleSearchByCategory = async (id: string) => {
     setLoading(true);
     const product = await getCategoryById(id);
-    setResults(product.results);
-    if (product) {
-      setResultState(true);
-      setLoading(false);
-    }
+    setSearchCategory(product.results);
+    setLoading(false);
   };
 
   const handleAddCart = (product: ProductType) => {
@@ -73,31 +56,23 @@ function Home() {
         searchByCategory={ handleSearchByCategory }
       />
 
+      <section>
+        {!loading && searchCategory.length > 0 ? (
+          <>
+            {searchCategory.map((element) => (
+              <div key={ element.id }>
+                <p>{element.name}</p>
+              </div>
+            ))}
+          </>
+        ) : (
+          <Loading />
+        )}
+      </section>
+
       <Section>
-        <div className="search-form">
-          <form>
-            <input
-              data-testid="query-input"
-              className="form-input"
-              type="text"
-              name="search"
-              value={ search }
-              onChange={ handleChange }
-            />
-            <button
-              data-testid="query-button"
-              onClick={ (e) => {
-                e.preventDefault();
-                handleSearchProduct();
-              } }
-            >
-              Procurar
-            </button>
 
-          </form>
-        </div>
-
-        {results.length === 0 && !loading && (
+        {data === null && !isLoading && (
           <InitialMessage data-testid="home-initial-message">
             <Title>Você ainda não realizou uma busca</Title>
             <TextMessage>
@@ -106,13 +81,15 @@ function Home() {
           </InitialMessage>
         )}
 
-        {loading ? (
+        {}
+
+        {isLoading ? (
           <Loading />
         ) : (
           <SearchResult>
-            {results.length > 0 ? (
+            {data !== null ? (
               <>
-                {results.map((prod) => (
+                {data.map((prod) => (
                   <Product data-testid="product" key={ prod.id }>
                     <ProductCard
                       productData={ prod }
@@ -131,9 +108,7 @@ function Home() {
                 ))}
               </>
             ) : (
-              <div
-                style={ { display: resultState === false ? 'none' : 'block' } }
-              >
+              <div>
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}

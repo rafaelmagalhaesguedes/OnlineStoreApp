@@ -22,9 +22,10 @@ const searchFailure = () => ({
 
 export function fetchSearchQuery(query: string) {
   return async (dispatch: Dispatch) => {
+    dispatch(searchBegin());
     try {
-      dispatch(searchBegin());
       const { results } = await getProductByQuery(query);
+      console.log(results);
       dispatch(searchSuccess(results));
     } catch (error: any) {
       console.log(error);

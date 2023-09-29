@@ -22,12 +22,15 @@ export type CategoryType = {
 };
 
 export type InitialStateType = {
+  data: ProductType[] | null,
   isLoading: boolean,
-  data: ProductType | null,
 };
 
 export type GlobalStateType = {
-  searchReducer: InitialStateType,
+  searchReducer: {
+    data: ProductType[] | null,
+    isLoading: boolean,
+  }
 };
 
-export type Dispatch = ThunkDispatch<GlobalStateType, unknown, AnyAction>;
+export type Dispatch = ThunkDispatch<GlobalStateType, null, AnyAction>;

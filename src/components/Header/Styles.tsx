@@ -11,12 +11,6 @@ export const HeaderContainer = styled.header`
   width: 100%;
 `;
 
-export const Search = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 export const Input = styled.input`
   width: 15rem;
   height: 35px;

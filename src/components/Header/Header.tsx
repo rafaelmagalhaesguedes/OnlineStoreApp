@@ -12,7 +12,6 @@ import {
   Logo,
   Image,
   Nav,
-  Search,
   IconSearch,
   IconCart,
 } from './Styles';
@@ -25,30 +24,28 @@ function Header() {
     setSearch(target.value);
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     dispatch(fetchSearchQuery(search));
   };
 
   return (
     <HeaderContainer>
-      <Search>
-        <form>
-          <Input
-            type="text"
-            name="search"
-            value={ search }
-            onChange={ handleChange }
-            placeholder="Pesquisar"
-          />
-          <IconSearch icon={ faSearch } />
-          <button
-            onClick={ handleSubmit }
-          >
-            Search
-          </button>
-        </form>
-      </Search>
+      <form>
+        <Input
+          type="text"
+          name="search"
+          value={ search }
+          onChange={ handleChange }
+          placeholder="Pesquisar"
+        />
+        <IconSearch icon={ faSearch } />
+        <button
+          onClick={ handleSubmit }
+        >
+          Buscar
+        </button>
+      </form>
       <Logo>
         <Image src={ LogoImage } alt="Logo" />
       </Logo>
