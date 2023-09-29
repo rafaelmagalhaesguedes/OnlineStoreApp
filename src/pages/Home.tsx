@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { /* useEffect */ useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ProductType, CategoryType, GlobalStateType } from '../types';
-import Aside from '../components/Aside/Aside';
+import { ProductType, /* CategoryType */ GlobalStateType } from '../types';
+/* import Aside from '../components/Aside/Aside'; */
 import ProductCard from '../components/ProductCard/ProductCard';
 import Loading from '../components/Loading/Loading';
 import '../styles/home.css';
 import {
-  getCategories,
-  getCategoryById,
+/* getCategories,
+  getCategoryById, */
 } from '../services/api';
 import {
   InitialMessage,
@@ -21,19 +21,18 @@ import {
 } from '../components/Home/Styles';
 
 function Home() {
-  const rootState = useSelector((state: GlobalStateType) => state.searchReducer);
-  const { data, isLoading } = rootState;
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [searchCategory, setSearchCategory] = useState<CategoryType[]>([]);
+  const { data, isLoading } = useSelector((state: GlobalStateType) => state);
+  /* const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [searchCategory, setSearchCategory] = useState<CategoryType[]>([]); */
   const [cart, setCart] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState(false);
+  /* const [loading, setLoading] = useState(false); */
 
-  const handleSearchByCategory = async (id: string) => {
+  /* const handleSearchByCategory = async (id: string) => {
     setLoading(true);
     const product = await getCategoryById(id);
     setSearchCategory(product.results);
     setLoading(false);
-  };
+  }; */
 
   const handleAddCart = (product: ProductType) => {
     const updateCart = [...cart, product];
@@ -41,22 +40,22 @@ function Home() {
     localStorage.setItem('cart', JSON.stringify(updateCart));
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchApiCategories = async () => {
       const categorie = await getCategories();
       setCategories(categorie);
     };
     fetchApiCategories();
-  }, []);
+  }, []); */
 
   return (
     <Main>
-      <Aside
+      {/* <Aside
         categories={ categories }
         searchByCategory={ handleSearchByCategory }
-      />
+      /> */}
 
-      <section>
+      {/* <section>
         {!loading && searchCategory.length > 0 ? (
           <>
             {searchCategory.map((element) => (
@@ -68,7 +67,7 @@ function Home() {
         ) : (
           <Loading />
         )}
-      </section>
+      </section> */}
 
       <Section>
 
