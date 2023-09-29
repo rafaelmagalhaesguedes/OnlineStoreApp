@@ -21,31 +21,13 @@ export type CategoryType = {
   name: string,
 };
 
-export type RootState = {
-  // Defina o formato do estado global aqui
-  app: {
-    searchQuery: string;
-    // Outros campos do estado app, se houver
-  };
-  // Outros estados globais, se houver
+export type InitialStateType = {
+  isLoading: boolean,
+  data: ProductType | null,
 };
 
-export interface AppState {
-  searchQuery: string;
-  searchResults: ProductType[];
-}
-
-//
-//
-//
-/*
-  Tipando apenas os campos que são usados
-*/
-
-export type SearchState = {
-  isLoading: boolean;
-  search: ProductType | null;
-  error: string | null;
+export type GlobalStateType = {
+  searchReducer: InitialStateType,
 };
 
-export type Dispatch = ThunkDispatch<SearchState, null, AnyAction>;
+export type Dispatch = ThunkDispatch<GlobalStateType, unknown, AnyAction>;

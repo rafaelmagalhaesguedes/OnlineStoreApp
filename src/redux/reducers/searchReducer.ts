@@ -1,55 +1,32 @@
-// src/redux/reducers/characterReducer.ts
+import { AnyAction } from 'redux';
+import { InitialStateType } from '../../types';
+import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../actions';
 
-import { ProductType, SearchState } from '../../types';
-
-const initialState = {
+const initialState: InitialStateType = {
   isLoading: false,
-  search: null,
-  error: null,
+  data: null,
 };
 
-type ActionType = {
-  type: string;
-  search?: ProductType;
-  error?: string;
-};
-
-function searchReducer(state: SearchState = initialState, action: ActionType) {
+function searchReducer(state = initialState, action: AnyAction) {
   switch (action.type) {
-    /*
-       SEARCH_BEGIN: Essa ação indicará que o fetch() à API foi realizado.
-       O reducer setará o valor de isLoading para true, indicando que está
-       aguardando retorno da API.
-    */
-    case 'SEARCH_BEGIN':
+    case SEARCH_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
 
-    /*
-       SEARCH_SUCCESS: Essa ação indicará que a API retornou as informações
-       com sucesso, setará o valor de isLoading para false, indicando que
-       não está mais aguardando retorno da API, e armazenará o retorno da
-       API na chave character.
-    */
-    case 'SEARCH_SUCCESS':
+    case SEARCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        search: action.search || null,
+        data: action.payload,
       };
 
-    /*
-       SEARCH_ERROR: Essa ação indicará que a API retornou qualquer tipo de
-       erro. Se ocorrer, o reducer armazenará a mensagem de erro na chave
-       error do estado global.
-    */
-    case 'SEARCH_ERROR':
+    case SEARCH_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.error || 'Erro desconhecido',
+        error: action.payload,
       };
     default:
       return state;

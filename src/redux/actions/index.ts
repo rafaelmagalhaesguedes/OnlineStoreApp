@@ -1,27 +1,34 @@
+import { getProductByQuery } from '../../services/api';
 import { ProductType, Dispatch } from '../../types';
 
-export const searchBegin = () => (
-  { type: 'SEARCH_BEGIN' }
+export const SEARCH_BEGIN = 'SEARCH_BEGIN';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const SEARCH_ERROR = 'SEARCH_ERROR';
+
+const searchBegin = () => ({
+  type: SEARCH_BEGIN,
+});
+
+const searchSuccess = (data: ProductType) => (
+  {
+    type: SEARCH_SUCCESS,
+    payload: data,
+  }
 );
 
-export const searchSuccess = (search: ProductType) => (
-  { type: 'SEARCH_SUCCESS', search }
-);
-
-export const searchFailure = (error: string) => (
-  { type: 'SEARCH_ERROR', error }
-);
+const searchFailure = () => ({
+  type: SEARCH_ERROR,
+});
 
 export function fetchSearchQuery(query: string) {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(searchBegin());
-      const response = await fetch(`https://anapioficeandfire.com/api/characters?name=${query}`);
-      const data: ProductType[] = await response.json();
-      console.log(data);
-      dispatch(searchSuccess(data[0]));
+      const { results } = await getProductByQuery(query);
+      dispatch(searchSuccess(results));
     } catch (error: any) {
-      dispatch(searchFailure(error.message));
+      console.log(error);
+      dispatch(searchFailure());
     }
   };
 }

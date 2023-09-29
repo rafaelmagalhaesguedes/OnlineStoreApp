@@ -25,22 +25,29 @@ function Header() {
     setSearch(target.value);
   };
 
+  const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(fetchSearchQuery(search));
+  };
+
   return (
     <HeaderContainer>
       <Search>
-        <Input
-          type="text"
-          placeholder="Pesquisar"
-          value={ search }
-          onChange={ handleChange }
-        />
-        <button
-          type="button"
-          onClick={ () => dispatch(fetchSearchQuery(search)) }
-        >
-          Search
-        </button>
-        <IconSearch icon={ faSearch } />
+        <form>
+          <Input
+            type="text"
+            name="search"
+            value={ search }
+            onChange={ handleChange }
+            placeholder="Pesquisar"
+          />
+          <IconSearch icon={ faSearch } />
+          <button
+            onClick={ handleSubmit }
+          >
+            Search
+          </button>
+        </form>
       </Search>
       <Logo>
         <Image src={ LogoImage } alt="Logo" />

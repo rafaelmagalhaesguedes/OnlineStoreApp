@@ -58,6 +58,7 @@ export async function getProductByQuery(query: string) {
   const APISearch = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
   try {
     const response = await fetch(APISearch);
+    console.log(response);
     if (!response) {
       throw new Error('Error fetching!');
     }
