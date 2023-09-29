@@ -4,7 +4,6 @@ import { ProductType, CategoryType, GlobalStateType } from '../types';
 import Aside from '../components/Aside/Aside';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Loading from '../components/Loading/Loading';
-import '../styles/home.css';
 import {
   getCategories,
   getCategoryById,

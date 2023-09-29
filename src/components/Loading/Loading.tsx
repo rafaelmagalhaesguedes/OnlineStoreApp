@@ -7,7 +7,7 @@ export default function Loading() {
   return (
     <Spinner>
       <IconSpinner />
-      <TextSpinner>Carregando...</TextSpinner>
+      {/* <TextSpinner>Carregando...</TextSpinner> */}
     </Spinner>
   );
 }
