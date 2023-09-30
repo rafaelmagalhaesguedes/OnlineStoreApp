@@ -2,7 +2,7 @@ import { CategoryType } from '../../types';
 import { AsideCategory, CardCategory, Divider, Input, Label, Title } from './Styles';
 
 type CategoryProps = {
-  categories: CategoryType[],
+  categories: CategoryType[] | null,
   searchByCategory: (id: string) => void;
 };
 
@@ -11,7 +11,7 @@ function Aside({ categories, searchByCategory } : CategoryProps) {
     <AsideCategory>
       <Title>Categorias</Title>
       <Divider />
-      {categories.map(({ id, name }) => (
+      {categories?.map(({ id, name }) => (
         <CardCategory key={ id }>
           <Label data-testid="category" htmlFor={ id }>
             <Input

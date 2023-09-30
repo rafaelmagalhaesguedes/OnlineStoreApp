@@ -1,10 +1,10 @@
 import { AnyAction } from 'redux';
-import { InitialState } from '../../../types';
-import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../../actions';
+import { InitialStateSearch } from '../../../types';
+import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../../actions/searchAction';
 
-const initialState: InitialState = {
+const initialState: InitialStateSearch = {
   isLoading: false,
-  data: null,
+  dataSearch: null,
 };
 
 function searchReducer(state = initialState, action: AnyAction) {
@@ -19,7 +19,7 @@ function searchReducer(state = initialState, action: AnyAction) {
       return {
         ...state,
         isLoading: false,
-        data: action.payload,
+        dataSearch: action.payload,
       };
 
     case SEARCH_ERROR:

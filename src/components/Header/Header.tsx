@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import LogoImage from '../../images/logo.png';
 import iconCart from '../../images/cart.png';
-import { fetchSearchQuery } from '../../redux/actions';
+import { fetchSearchQuery } from '../../redux/actions/searchAction';
 import { Dispatch } from '../../types';
 import {
   HeaderContainer,

@@ -1,13 +1,11 @@
-import { /* useEffect */ useState } from 'react';
-import { useSelector } from 'react-redux';
-import { ProductType, /* CategoryType */ GlobalStateType } from '../../types';
-/* import Aside from '../../components/Aside/Aside'; */
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { ProductType, GlobalStateType, Dispatch } from '../../types';
+import Aside from '../../components/Aside/Aside';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Loading from '../../components/Loading/Loading';
-import {
-/* getCategories,
-  getCategoryById, */
-} from '../../services/api';
+import { getCategoryById } from '../../services/api';
+import { fetchCategoryByID } from '../../redux/actions/categoryAction';
 import {
   InitialMessage,
   Main,
@@ -16,25 +14,26 @@ import {
   TextMessage,
   SearchResult,
   Product,
-  /* Button, */
 } from './styles';
 
 function Home() {
-  const { data, isLoading } = useSelector(
+  const dispatch: Dispatch = useDispatch();
+  const { dataSearch, isLoading } = useSelector(
     (state: GlobalStateType) => state.searchReducer,
   );
-  const [state/* setState */] = useState(false);/*
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [searchCategory, setSearchCategory] = useState<ProductType[]>([]); */
-  const [cart, setCart] = useState<ProductType[]>([]);/*
-  const [loading, setLoading] = useState(false); */
-  /*
+
+  const { dataCategory } = useSelector(
+    (state: GlobalStateType) => state.searchCategory,
+  );
+
+  const [/* searchCategory */, setSearchCategory] = useState<ProductType[]>([]);
+  const [cart, setCart] = useState<ProductType[]>([]);
+  const [state] = useState(false);
+
   const handleSearchByCategory = async (id: string) => {
-    setLoading(true);
     const product = await getCategoryById(id);
     setSearchCategory(product.results);
-    setLoading(false);
-  }; */
+  };
 
   const handleAddCart = (product: ProductType) => {
     const updateCart = [...cart, product];
@@ -42,36 +41,20 @@ function Home() {
     localStorage.setItem('cart', JSON.stringify(updateCart));
   };
 
-  /* useEffect(() => {
-    const fetchApiCategories = async () => {
-      const categorie = await getCategories();
-      setCategories(categorie);
-    };
-    fetchApiCategories();
-  }, []); */
+  useEffect(() => {
+    dispatch(fetchCategoryByID());
+  }, []);
 
   return (
     <Main>
-      {/* <Aside
-        categories={ categories }
+      <Aside
+        categories={ dataCategory }
         searchByCategory={ handleSearchByCategory }
-      /> */}
-
-      {/* <section>
-        {searchCategory.length > 0 ? (
-          <>
-            {searchCategory.map((element) => (
-              <div key={ element.id }>
-                <p>{element.name}</p>
-              </div>
-            ))}
-          </>
-        )}
-      </section> */}
+      />
 
       <Section>
 
-        {data === null && !isLoading && (
+        {dataSearch === null && !isLoading && (
           <InitialMessage data-testid="home-initial-message">
             <Title>Você ainda não realizou uma busca</Title>
             <TextMessage>
@@ -86,9 +69,9 @@ function Home() {
           <Loading />
         ) : (
           <SearchResult>
-            {data !== null ? (
+            {dataSearch !== null ? (
               <>
-                {data.map((prod) => (
+                {dataSearch.map((prod: any) => (
                   <Product data-testid="product" key={ prod.id }>
                     <ProductCard
                       productData={ prod }
