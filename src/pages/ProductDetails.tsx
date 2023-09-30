@@ -1,8 +1,20 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductById } from '../services/api';
 import { ProductType } from '../types';
-import iconCart from '../images/cart.png';
+import iconBack from '../images/Voltar.png';
+import {
+  ContainerProductDetails,
+  ItemList,
+  LinkToBack,
+  ListDetails,
+  PanelProduct,
+  ProductImage,
+  ProductName,
+  SectionDetails,
+  SectionProduct,
+  TitleProductDetails,
+} from '../components/ProductDetails/Styles';
 
 //
 function ProductDetails() {
@@ -31,25 +43,38 @@ function ProductDetails() {
   }, [id]);
 
   return (
-    <>
-      <h1>ProductDetails</h1>
-      <Link to="/shoppingcart" data-testid="shopping-cart-button">
-        <img
-          className="icon-shopping-cart"
-          src={ iconCart }
-          alt="Link Shopping Cart"
-        />
-      </Link>
+    <ContainerProductDetails>
       {product ? (
         <>
-          <section>
-            <div className="product-details">
-              <p data-testid="product-detail-name">{product.title}</p>
-              <p data-testid="product-detail-image">
-                <img src={ product.thumbnail } alt={ product.title } />
-              </p>
-              <p data-testid="product-detail-price">{product.price}</p>
-            </div>
+          <SectionProduct>
+            <LinkToBack to="/">
+              <img src={ iconBack } alt="Voltar" />
+            </LinkToBack>
+            <PanelProduct>
+              <ProductName data-testid="product-detail-name">
+                {product.title}
+              </ProductName>
+              <ProductImage
+                data-testid="product-detail-image"
+                src={ product.thumbnail }
+                alt={ product.title }
+              />
+            </PanelProduct>
+          </SectionProduct>
+          <SectionDetails>
+            <TitleProductDetails>Especificações técnicas</TitleProductDetails>
+            <ListDetails>
+              {product.attributes.map((attribute) => (
+                <ItemList
+                  key={ attribute.name }
+                >
+                  { attribute.name }
+                  :
+                  {' '}
+                  { attribute.value_name }
+                </ItemList>
+              ))}
+            </ListDetails>
 
             <button
               data-testid="product-detail-add-to-cart"
@@ -57,26 +82,14 @@ function ProductDetails() {
             >
               Adicionar
             </button>
-          </section>
-          <section>
-            <h3>Descrição</h3>
-            <ul>
-              {product.attributes.map((attribute) => (
-                <li
-                  key={ attribute.name }
-                >
-                  { attribute.name }
-                  :
-                  { attribute.value_name }
-                </li>
-              ))}
-            </ul>
-          </section>
+
+            <p data-testid="product-detail-price">{product.price}</p>
+          </SectionDetails>
         </>
       ) : (
         <p>Loading...</p>
       )}
-    </>
+    </ContainerProductDetails>
   );
 }
 
