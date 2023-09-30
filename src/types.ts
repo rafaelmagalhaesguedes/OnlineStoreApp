@@ -23,17 +23,23 @@ export type CategoryType = {
 
 export type InitialStateSearch = {
   dataSearch: ProductType[] | null,
-  isLoading: boolean,
+  loadingSearch: boolean,
 };
 
 export type InitialStateCategory = {
   dataCategory: CategoryType[] | null,
-  isLoading: boolean,
+  loadingCategory: boolean,
+};
+
+export type InitialStateSearchCategory = {
+  dataCategoryById: ProductType[] | null,
+  loadingCategoryId: boolean,
 };
 
 export type GlobalStateType = {
   searchReducer: InitialStateSearch;
   searchCategory: InitialStateCategory;
+  searchCategoryById: InitialStateSearchCategory;
 };
 
 export type Dispatch = ThunkDispatch<GlobalStateType, null, AnyAction>;

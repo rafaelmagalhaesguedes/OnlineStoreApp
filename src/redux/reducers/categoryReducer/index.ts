@@ -4,11 +4,10 @@ import {
   SEARCH_CATEGORY_BEGIN,
   SEARCH_CATEGORY_SUCCESS,
   SEARCH_CATEGORY_ERROR,
-  SEARCH_CATEGORY_CLEAR,
 } from '../../actions/categoryAction';
 
 const initialState: InitialStateCategory = {
-  isLoading: false,
+  loadingCategory: false,
   dataCategory: null,
 };
 
@@ -17,25 +16,20 @@ function searchCategory(state = initialState, action: AnyAction) {
     case SEARCH_CATEGORY_BEGIN:
       return {
         ...state,
-        isLoading: true,
+        loadingCategory: true,
       };
 
     case SEARCH_CATEGORY_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        loadingCategory: false,
         dataCategory: action.payload,
       };
 
     case SEARCH_CATEGORY_ERROR:
       return {
         ...state,
-        isLoading: false,
-      };
-    case SEARCH_CATEGORY_CLEAR:
-      return {
-        ...state,
-        dataCategory: null,
+        loadingCategory: false,
       };
     default:
       return state;

@@ -8,7 +8,7 @@ import {
 } from '../../actions/searchAction';
 
 const initialState: InitialStateSearch = {
-  isLoading: false,
+  loadingSearch: false,
   dataSearch: null,
 };
 
@@ -17,20 +17,20 @@ function searchReducer(state = initialState, action: AnyAction) {
     case SEARCH_BEGIN:
       return {
         ...state,
-        isLoading: true,
+        loadingSearch: true,
       };
 
     case SEARCH_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        loadingSearch: false,
         dataSearch: action.payload,
       };
 
     case SEARCH_ERROR:
       return {
         ...state,
-        isLoading: false,
+        loadingSearch: false,
       };
 
     case SEARCH_CLEAR:

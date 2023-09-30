@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import LogoImage from '../../images/logo.png';
 import iconCart from '../../images/cart.png';
-import { fetchSearchQuery } from '../../redux/actions/searchAction';
+import { fetchSearchQuery, searchClear } from '../../redux/actions/searchAction';
+import { searchCategoryClear } from '../../redux/actions/searchCategoryAction';
 import { Dispatch } from '../../types';
 import {
   HeaderContainer,
@@ -29,13 +30,17 @@ function Header() {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    dispatch(searchCategoryClear());
+    dispatch(searchClear());
     dispatch(fetchSearchQuery(search));
   };
 
   return (
     <HeaderContainer>
       <Logo>
-        <Image src={ LogoImage } alt="Logo" />
+        <Link to="/">
+          <Image src={ LogoImage } alt="Logo" />
+        </Link>
       </Logo>
       <Wrapper>
         <FormHeader>

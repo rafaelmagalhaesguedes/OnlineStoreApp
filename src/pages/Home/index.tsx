@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProductType, GlobalStateType, Dispatch } from '../../types';
-import Aside from '../../components/Aside/Aside';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import Aside from '../../components/Aside/Aside';
 import Loading from '../../components/Loading/Loading';
-import { getCategoryById } from '../../services/api';
-import { searchClear } from '../../redux/actions/searchAction';
+import { fetchCategoryByID } from '../../redux/actions/categoryAction';
 import {
-  fetchCategoryByID,
+  fetchSearchById,
   searchCategoryClear,
-} from '../../redux/actions/categoryAction';
+} from '../../redux/actions/searchCategoryAction';
 import {
   InitialMessage,
   Main,
@@ -19,10 +18,12 @@ import {
   SearchResult,
   Product,
 } from './styles';
+import { searchClear } from '../../redux/actions/searchAction';
 
 function Home() {
   const dispatch: Dispatch = useDispatch();
-  const { dataSearch, isLoading } = useSelector(
+
+  const { dataSearch, loadingSearch } = useSelector(
     (state: GlobalStateType) => state.searchReducer,
   );
 
@@ -30,17 +31,16 @@ function Home() {
     (state: GlobalStateType) => state.searchCategory,
   );
 
-  const [searchCategory, setSearchCategory] = useState<ProductType[]>([]);
+  const { dataCategoryById, loadingCategoryId } = useSelector(
+    (state: GlobalStateType) => state.searchCategoryById,
+  );
+
   const [cart, setCart] = useState<ProductType[]>([]);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
   const handleSearchByCategory = async (id: string) => {
-    setIsLoadingCategories(true); // Inicia o loading para categorias
-    setSearchCategory([]);
-    dispatch(searchClear()); // Limpa os resultados de busca por texto
-    const product = await getCategoryById(id);
-    setSearchCategory(product.results);
-    setIsLoadingCategories(false); // Encerra o loading para categorias
+    dispatch(searchClear());
+    dispatch(searchCategoryClear());
+    dispatch(fetchSearchById(id));
   };
 
   const handleAddCart = (product: ProductType) => {
@@ -51,7 +51,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(fetchCategoryByID());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Main>
@@ -61,8 +61,8 @@ function Home() {
       />
 
       <Section>
-        {isLoading ? (
-          <Loading /> // Loading específico para categorias
+        {loadingSearch ? (
+          <Loading />
         ) : (
           <SearchResult>
             {dataSearch ? (
@@ -74,34 +74,38 @@ function Home() {
                 ))}
               </>
             ) : (
-              <div style={ { display: 'none' } }>
+              <div>
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}
           </SearchResult>
         )}
 
-        {isLoadingCategories ? (
-          <Loading /> // Loading específico para categorias
+        {loadingCategoryId ? (
+          <Loading />
         ) : (
           <SearchResult>
-            {searchCategory.length > 0 ? (
+            {dataCategoryById !== null ? (
               <>
-                {searchCategory.map((prod) => (
+                {dataCategoryById.map((prod) => (
                   <Product data-testid="product" key={ prod.id }>
                     <ProductCard productData={ prod } addCart={ handleAddCart } />
                   </Product>
                 ))}
               </>
             ) : (
-              <div style={ { display: 'none' } }>
+              <div
+                style={
+                  dataCategoryById === null ? { display: 'none' } : { display: 'block' }
+                }
+              >
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}
           </SearchResult>
         )}
 
-        {!dataSearch && !searchCategory.length && !isLoadingCategories && !isLoading && (
+        {(!dataSearch && !dataCategoryById) && (
           <InitialMessage data-testid="home-initial-message">
             <Title>Você ainda não realizou uma busca</Title>
             <TextMessage>

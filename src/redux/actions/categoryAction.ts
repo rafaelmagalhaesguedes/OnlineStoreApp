@@ -21,10 +21,6 @@ const searchCategoryFailure = () => ({
   type: SEARCH_CATEGORY_ERROR,
 });
 
-export const searchCategoryClear = () => ({
-  type: SEARCH_CATEGORY_CLEAR,
-});
-
 export function fetchCategoryByID() {
   return async (dispatch: Dispatch) => {
     dispatch(searchCategoryBegin());
