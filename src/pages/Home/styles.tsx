@@ -10,31 +10,26 @@ export const Main = styled.main`
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 70%;
 `;
 
 export const InitialMessage = styled.div`
-  padding-top: 150px;
+  padding-top: 100px;
   text-align: center;
 `;
 
 export const Title = styled.h2`
   color: #31C28D;
   padding: 20px 0;
-  font-family: Epilogue;
   font-size: 30px;
   font-weight: 600;
   line-height: 31px;
-  letter-spacing: 0.055em;  
 `;
 
 export const TextMessage = styled.p`
   color: #94979D;
-  font-family: Epilogue;
   font-size: 20px;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: 0em;
+  font-weight: 500;
 `;
 
 export const SearchResult = styled.div`
