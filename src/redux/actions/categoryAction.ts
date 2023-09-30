@@ -4,6 +4,7 @@ import { Dispatch, CategoryType } from '../../types';
 export const SEARCH_CATEGORY_BEGIN = 'SEARCH_CATEGORY_BEGIN';
 export const SEARCH_CATEGORY_SUCCESS = 'SEARCH_CATEGORY_SUCCESS';
 export const SEARCH_CATEGORY_ERROR = 'SEARCH_CATEGORY_ERROR';
+export const SEARCH_CATEGORY_CLEAR = 'SEARCH_CATEGORY_CLEAR';
 
 const searchCategoryBegin = () => ({
   type: SEARCH_CATEGORY_BEGIN,
@@ -18,6 +19,10 @@ const searchCategorySuccess = (dataCategory: CategoryType) => (
 
 const searchCategoryFailure = () => ({
   type: SEARCH_CATEGORY_ERROR,
+});
+
+export const searchCategoryClear = () => ({
+  type: SEARCH_CATEGORY_CLEAR,
 });
 
 export function fetchCategoryByID() {

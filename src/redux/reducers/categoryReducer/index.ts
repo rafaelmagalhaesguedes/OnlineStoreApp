@@ -4,6 +4,7 @@ import {
   SEARCH_CATEGORY_BEGIN,
   SEARCH_CATEGORY_SUCCESS,
   SEARCH_CATEGORY_ERROR,
+  SEARCH_CATEGORY_CLEAR,
 } from '../../actions/categoryAction';
 
 const initialState: InitialStateCategory = {
@@ -30,6 +31,11 @@ function searchCategory(state = initialState, action: AnyAction) {
       return {
         ...state,
         isLoading: false,
+      };
+    case SEARCH_CATEGORY_CLEAR:
+      return {
+        ...state,
+        dataCategory: null,
       };
     default:
       return state;

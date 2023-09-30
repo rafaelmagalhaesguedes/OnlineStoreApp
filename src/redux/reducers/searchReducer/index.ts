@@ -1,6 +1,11 @@
 import { AnyAction } from 'redux';
 import { InitialStateSearch } from '../../../types';
-import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../../actions/searchAction';
+import {
+  SEARCH_BEGIN,
+  SEARCH_SUCCESS,
+  SEARCH_ERROR,
+  SEARCH_CLEAR,
+} from '../../actions/searchAction';
 
 const initialState: InitialStateSearch = {
   isLoading: false,
@@ -26,6 +31,12 @@ function searchReducer(state = initialState, action: AnyAction) {
       return {
         ...state,
         isLoading: false,
+      };
+
+    case SEARCH_CLEAR:
+      return {
+        ...state,
+        dataSearch: null,
       };
     default:
       return state;

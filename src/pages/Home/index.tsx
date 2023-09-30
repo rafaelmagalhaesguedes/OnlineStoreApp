@@ -5,7 +5,11 @@ import Aside from '../../components/Aside/Aside';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Loading from '../../components/Loading/Loading';
 import { getCategoryById } from '../../services/api';
-import { fetchCategoryByID } from '../../redux/actions/categoryAction';
+import { searchClear } from '../../redux/actions/searchAction';
+import {
+  fetchCategoryByID,
+  searchCategoryClear,
+} from '../../redux/actions/categoryAction';
 import {
   InitialMessage,
   Main,
@@ -26,13 +30,17 @@ function Home() {
     (state: GlobalStateType) => state.searchCategory,
   );
 
-  const [/* searchCategory */, setSearchCategory] = useState<ProductType[]>([]);
+  const [searchCategory, setSearchCategory] = useState<ProductType[]>([]);
   const [cart, setCart] = useState<ProductType[]>([]);
-  const [state] = useState(false);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
   const handleSearchByCategory = async (id: string) => {
+    setIsLoadingCategories(true); // Inicia o loading para categorias
+    setSearchCategory([]);
+    dispatch(searchClear()); // Limpa os resultados de busca por texto
     const product = await getCategoryById(id);
     setSearchCategory(product.results);
+    setIsLoadingCategories(false); // Encerra o loading para categorias
   };
 
   const handleAddCart = (product: ProductType) => {
@@ -53,8 +61,47 @@ function Home() {
       />
 
       <Section>
+        {isLoading ? (
+          <Loading /> // Loading específico para categorias
+        ) : (
+          <SearchResult>
+            {dataSearch ? (
+              <>
+                {dataSearch.map((prod) => (
+                  <Product data-testid="product" key={ prod.id }>
+                    <ProductCard productData={ prod } addCart={ handleAddCart } />
+                  </Product>
+                ))}
+              </>
+            ) : (
+              <div style={ { display: 'none' } }>
+                <p className="search-error-message">Nenhum produto foi encontrado</p>
+              </div>
+            )}
+          </SearchResult>
+        )}
 
-        {dataSearch === null && !isLoading && (
+        {isLoadingCategories ? (
+          <Loading /> // Loading específico para categorias
+        ) : (
+          <SearchResult>
+            {searchCategory.length > 0 ? (
+              <>
+                {searchCategory.map((prod) => (
+                  <Product data-testid="product" key={ prod.id }>
+                    <ProductCard productData={ prod } addCart={ handleAddCart } />
+                  </Product>
+                ))}
+              </>
+            ) : (
+              <div style={ { display: 'none' } }>
+                <p className="search-error-message">Nenhum produto foi encontrado</p>
+              </div>
+            )}
+          </SearchResult>
+        )}
+
+        {!dataSearch && !searchCategory.length && !isLoadingCategories && !isLoading && (
           <InitialMessage data-testid="home-initial-message">
             <Title>Você ainda não realizou uma busca</Title>
             <TextMessage>
@@ -62,34 +109,6 @@ function Home() {
             </TextMessage>
           </InitialMessage>
         )}
-
-        {}
-
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <SearchResult>
-            {dataSearch !== null ? (
-              <>
-                {dataSearch.map((prod: any) => (
-                  <Product data-testid="product" key={ prod.id }>
-                    <ProductCard
-                      productData={ prod }
-                      addCart={ handleAddCart }
-                    />
-                  </Product>
-                ))}
-              </>
-            ) : (
-              <div
-                style={ { display: state === false ? 'none' : 'block' } }
-              >
-                <p className="search-error-message">Nenhum produto foi encontrado</p>
-              </div>
-            )}
-          </SearchResult>
-        )}
-
       </Section>
     </Main>
   );
