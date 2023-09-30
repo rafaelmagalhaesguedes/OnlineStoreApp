@@ -21,13 +21,17 @@ export type CategoryType = {
   name: string,
 };
 
-export type InitialStateType = {
+export type Data = {
+  productData: ProductType[],
+};
+
+export type InitialState = {
   data: ProductType[] | null,
   isLoading: boolean,
 };
 
 export type GlobalStateType = {
-  searchReducer: InitialStateType,
+  searchReducer: InitialState;
 };
 
 export type Dispatch = ThunkDispatch<GlobalStateType, null, AnyAction>;

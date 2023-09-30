@@ -1,8 +1,8 @@
 import { AnyAction } from 'redux';
-import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../actions';
-import { InitialStateType } from '../../types';
+import { InitialState } from '../../../types';
+import { SEARCH_BEGIN, SEARCH_SUCCESS, SEARCH_ERROR } from '../../actions';
 
-const initialState: InitialStateType = {
+const initialState: InitialState = {
   isLoading: false,
   data: null,
 };
