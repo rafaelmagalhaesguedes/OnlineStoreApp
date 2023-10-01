@@ -14,7 +14,9 @@ import {
   SectionDetails,
   SectionProduct,
   TitleProductDetails,
-} from './Styles';
+  ButtonAddCart,
+  WrapperButton,
+} from './styles';
 
 //
 function ProductDetails() {
@@ -76,14 +78,21 @@ function ProductDetails() {
               ))}
             </ListDetails>
 
-            <button
-              data-testid="product-detail-add-to-cart"
-              onClick={ () => handleAddToCart(product) }
-            >
-              Adicionar
-            </button>
+            <WrapperButton>
+              <p data-testid="product-detail-price">
+                R$
+              </p>
+              <p className="price">
+                {product.price}
+              </p>
 
-            <p data-testid="product-detail-price">{product.price}</p>
+              <ButtonAddCart
+                data-testid="product-detail-add-to-cart"
+                onClick={ () => handleAddToCart(product) }
+              >
+                Adicionar ao Carrinho
+              </ButtonAddCart>
+            </WrapperButton>
           </SectionDetails>
         </>
       ) : (

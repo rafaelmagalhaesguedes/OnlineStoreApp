@@ -61,14 +61,49 @@ export const ListDetails = styled.ul`
   padding-left: 20px;
   word-break: break-all;
   width: 25rem;
+  overflow: scroll;
+  height: 400px;
 `;
 
 export const ItemList = styled.li`
   color: #94979D;
   margin: 10px 20px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
+`;
+
+export const WrapperButton = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+
+  p {
+    color: #B0B3BB;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .price {
+    margin: 0 5px;
+    color: #444955;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 21px;
+  }
+`;
+
+export const ButtonAddCart = styled.button`
+  color: white;
+  height: 38px;
+  background: #31C28D;
+  border: 1px solid #31C28D;
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 100px;
+  width: 244px;
+  cursor: pointer;
 `;
