@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getProductById } from '../services/api';
-import { ProductType } from '../types';
-import iconBack from '../images/Voltar.png';
+import { getProductById } from '../../services/api';
+import { ProductType } from '../../types';
+import iconBack from '../../images/Voltar.png';
 import {
   ContainerProductDetails,
   ItemList,
@@ -14,7 +14,7 @@ import {
   SectionDetails,
   SectionProduct,
   TitleProductDetails,
-} from '../components/ProductDetails/Styles';
+} from './Styles';
 
 //
 function ProductDetails() {

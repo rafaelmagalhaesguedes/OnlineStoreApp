@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ProductType } from '../types';
+import { ProductType } from '../../types';
 
 export default function ShoppingCart() {
   const [cart, setCart] = useState<ProductType[]>([]);

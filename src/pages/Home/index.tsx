@@ -9,7 +9,7 @@ import { fetchCategoryByID } from '../../redux/actions/categoryAction';
 import {
   ErrorMessageText,
   ErrorMessageWrapper,
-} from '../../components/Home/SearchNoFound/Styles';
+} from './SearchNoFound/styles';
 import {
   fetchSearchById,
   searchCategoryClear,
