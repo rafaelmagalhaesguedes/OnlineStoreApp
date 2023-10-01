@@ -1,11 +1,9 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-curly-spacing */
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProductType, GlobalStateType, Dispatch } from '../../types';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import Aside from '../../components/Aside/Aside';
 import Loading from '../../components/Loading/Loading';
+import Aside from '../../components/Aside/Aside';
 import { searchClear } from '../../redux/actions/searchAction';
 import { fetchCategoryByID } from '../../redux/actions/categoryAction';
 import {
@@ -33,12 +31,12 @@ function Home() {
     (state: GlobalStateType) => state.searchReducer,
   );
 
-  const { dataCategory } = useSelector(
-    (state: GlobalStateType) => state.searchCategory,
-  );
-
   const { dataCategoryById, loadingCategoryId, errorCategory } = useSelector(
     (state: GlobalStateType) => state.searchCategoryById,
+  );
+
+  const { dataCategory } = useSelector(
+    (state: GlobalStateType) => state.searchCategory,
   );
 
   const [cart, setCart] = useState<ProductType[]>([]);
@@ -80,7 +78,7 @@ function Home() {
                 ))}
               </>
             ) : (
-              <ErrorMessageWrapper isVisible={errorMessage}>
+              <ErrorMessageWrapper isVisible={ errorMessage }>
                 <ErrorMessageText>Nenhum produto foi encontrado</ErrorMessageText>
               </ErrorMessageWrapper>
             )}
@@ -89,18 +87,22 @@ function Home() {
 
         {loadingCategoryId ? (
           <Loading />
-        ) : dataCategoryById !== null ? (
-          <SearchResult>
-            {dataCategoryById.map((prod) => (
-              <Product data-testid="product" key={prod.id}>
-                <ProductCard productData={prod} addCart={handleAddCart} />
-              </Product>
-            ))}
-          </SearchResult>
         ) : (
-          <ErrorMessageWrapper isVisible={errorCategory}>
-            <ErrorMessageText>Nenhum produto foi encontrado</ErrorMessageText>
-          </ErrorMessageWrapper>
+          <SearchResult>
+            {dataCategoryById !== null ? (
+              <>
+                {dataCategoryById.map((prod) => (
+                  <Product data-testid="product" key={ prod.id }>
+                    <ProductCard productData={ prod } addCart={ handleAddCart } />
+                  </Product>
+                ))}
+              </>
+            ) : (
+              <ErrorMessageWrapper isVisible={ errorCategory }>
+                <ErrorMessageText>Nenhum produto foi encontrado</ErrorMessageText>
+              </ErrorMessageWrapper>
+            )}
+          </SearchResult>
         )}
 
         {(dataSearch === null && dataCategoryById === null
