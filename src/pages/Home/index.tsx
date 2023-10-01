@@ -74,7 +74,7 @@ function Home() {
                 ))}
               </>
             ) : (
-              <div>
+              <div style={ { display: 'none' } }>
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}
@@ -94,11 +94,7 @@ function Home() {
                 ))}
               </>
             ) : (
-              <div
-                style={
-                  dataCategoryById === null ? { display: 'none' } : { display: 'block' }
-                }
-              >
+              <div style={ { display: 'none' } }>
                 <p className="search-error-message">Nenhum produto foi encontrado</p>
               </div>
             )}

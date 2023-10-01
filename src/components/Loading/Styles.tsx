@@ -12,8 +12,7 @@ export const Spinner = styled.section`
   justify-content: center;
   gap: 10px;
   position: relative;
-  padding-top: 150px;
-  margin-left: 120px;
+  height: 100vh;
 `;
 
 export const IconSpinner = styled.span`
