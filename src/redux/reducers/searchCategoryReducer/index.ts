@@ -10,6 +10,7 @@ import {
 const initialState: InitialStateSearchCategory = {
   loadingCategoryId: false,
   dataCategoryById: null,
+  errorCategory: false,
 };
 
 function searchCategoryById(state = initialState, action: AnyAction) {
@@ -25,12 +26,14 @@ function searchCategoryById(state = initialState, action: AnyAction) {
         ...state,
         loadingCategoryId: false,
         dataCategoryById: action.payload,
+        errorCategory: false,
       };
 
     case CATEGORY_ERROR:
       return {
         ...state,
         loadingCategoryId: false,
+        errorCategory: true,
       };
 
     case CATEGORY_CLEAR:

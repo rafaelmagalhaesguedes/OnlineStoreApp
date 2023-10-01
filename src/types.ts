@@ -24,6 +24,7 @@ export type CategoryType = {
 export type InitialStateSearch = {
   dataSearch: ProductType[] | null,
   loadingSearch: boolean,
+  errorMessage: boolean,
 };
 
 export type InitialStateCategory = {
@@ -34,6 +35,7 @@ export type InitialStateCategory = {
 export type InitialStateSearchCategory = {
   dataCategoryById: ProductType[] | null,
   loadingCategoryId: boolean,
+  errorCategory: boolean,
 };
 
 export type GlobalStateType = {

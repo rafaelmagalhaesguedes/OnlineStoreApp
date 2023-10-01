@@ -9,6 +9,7 @@ import {
 const initialState: InitialStateCategory = {
   loadingCategory: false,
   dataCategory: null,
+  errorMessage: false,
 };
 
 function searchCategory(state = initialState, action: AnyAction) {

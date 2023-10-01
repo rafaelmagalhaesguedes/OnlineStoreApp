@@ -1,10 +1,17 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-curly-spacing */
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProductType, GlobalStateType, Dispatch } from '../../types';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Aside from '../../components/Aside/Aside';
 import Loading from '../../components/Loading/Loading';
+import { searchClear } from '../../redux/actions/searchAction';
 import { fetchCategoryByID } from '../../redux/actions/categoryAction';
+import {
+  ErrorMessageText,
+  ErrorMessageWrapper,
+} from '../../components/Home/SearchNoFound/Styles';
 import {
   fetchSearchById,
   searchCategoryClear,
@@ -18,12 +25,11 @@ import {
   SearchResult,
   Product,
 } from './styles';
-import { searchClear } from '../../redux/actions/searchAction';
 
 function Home() {
   const dispatch: Dispatch = useDispatch();
 
-  const { dataSearch, loadingSearch } = useSelector(
+  const { dataSearch, loadingSearch, errorMessage } = useSelector(
     (state: GlobalStateType) => state.searchReducer,
   );
 
@@ -31,7 +37,7 @@ function Home() {
     (state: GlobalStateType) => state.searchCategory,
   );
 
-  const { dataCategoryById, loadingCategoryId } = useSelector(
+  const { dataCategoryById, loadingCategoryId, errorCategory } = useSelector(
     (state: GlobalStateType) => state.searchCategoryById,
   );
 
@@ -65,7 +71,7 @@ function Home() {
           <Loading />
         ) : (
           <SearchResult>
-            {dataSearch ? (
+            {dataSearch !== null ? (
               <>
                 {dataSearch.map((prod) => (
                   <Product data-testid="product" key={ prod.id }>
@@ -74,40 +80,37 @@ function Home() {
                 ))}
               </>
             ) : (
-              <div style={ { display: 'none' } }>
-                <p className="search-error-message">Nenhum produto foi encontrado</p>
-              </div>
+              <ErrorMessageWrapper isVisible={errorMessage}>
+                <ErrorMessageText>Nenhum produto foi encontrado</ErrorMessageText>
+              </ErrorMessageWrapper>
             )}
           </SearchResult>
         )}
 
         {loadingCategoryId ? (
           <Loading />
-        ) : (
+        ) : dataCategoryById !== null ? (
           <SearchResult>
-            {dataCategoryById !== null ? (
-              <>
-                {dataCategoryById.map((prod) => (
-                  <Product data-testid="product" key={ prod.id }>
-                    <ProductCard productData={ prod } addCart={ handleAddCart } />
-                  </Product>
-                ))}
-              </>
-            ) : (
-              <div style={ { display: 'none' } }>
-                <p className="search-error-message">Nenhum produto foi encontrado</p>
-              </div>
-            )}
+            {dataCategoryById.map((prod) => (
+              <Product data-testid="product" key={prod.id}>
+                <ProductCard productData={prod} addCart={handleAddCart} />
+              </Product>
+            ))}
           </SearchResult>
+        ) : (
+          <ErrorMessageWrapper isVisible={errorCategory}>
+            <ErrorMessageText>Nenhum produto foi encontrado</ErrorMessageText>
+          </ErrorMessageWrapper>
         )}
 
-        {(!dataSearch && !dataCategoryById) && (
-          <InitialMessage data-testid="home-initial-message">
-            <Title>Você ainda não realizou uma busca</Title>
-            <TextMessage>
-              Digite algum termo de pesquisa ou escolha uma categoria
-            </TextMessage>
-          </InitialMessage>
+        {(dataSearch === null && dataCategoryById === null
+          && !loadingCategoryId && !loadingSearch) && (
+            <InitialMessage data-testid="home-initial-message">
+              <Title>Você ainda não realizou uma busca</Title>
+              <TextMessage>
+                Digite algum termo de pesquisa ou escolha uma categoria
+              </TextMessage>
+            </InitialMessage>
         )}
       </Section>
     </Main>

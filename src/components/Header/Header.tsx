@@ -33,6 +33,7 @@ function Header() {
     dispatch(searchCategoryClear());
     dispatch(searchClear());
     dispatch(fetchSearchQuery(search));
+    setSearch('');
   };
 
   return (

@@ -10,6 +10,7 @@ import {
 const initialState: InitialStateSearch = {
   loadingSearch: false,
   dataSearch: null,
+  errorMessage: false,
 };
 
 function searchReducer(state = initialState, action: AnyAction) {
@@ -18,6 +19,7 @@ function searchReducer(state = initialState, action: AnyAction) {
       return {
         ...state,
         loadingSearch: true,
+        errorMessage: false,
       };
 
     case SEARCH_SUCCESS:
@@ -25,12 +27,14 @@ function searchReducer(state = initialState, action: AnyAction) {
         ...state,
         loadingSearch: false,
         dataSearch: action.payload,
+        errorMessage: false,
       };
 
     case SEARCH_ERROR:
       return {
         ...state,
         loadingSearch: false,
+        errorMessage: true,
       };
 
     case SEARCH_CLEAR:
