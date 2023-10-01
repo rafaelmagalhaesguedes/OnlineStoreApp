@@ -7,7 +7,7 @@ export const AsideCategory = styled.aside`
   flex-direction: column;
   height: auto;
   padding: 30px;
-  width: 23%;
+  width: 30%;
 `;
 
 export const Title = styled.h2`

@@ -10,7 +10,7 @@ export const Main = styled.main`
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 100%;
 `;
 
 export const InitialMessage = styled.div`
@@ -36,15 +36,17 @@ export const SearchResult = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  align-items: center;
+  padding: 20px 0;
 `;
 
 export const Product = styled.div`
   display: flex;
   background: white;
-  flex-direction: column; 
-  height: 20rem;
-  width: 15rem;
-  margin: 25px;
+  flex-direction: column;
+  width: 280px;
+  height: 360px;
+  margin: 10px;
 `;
 
 export const Button = styled.button`
