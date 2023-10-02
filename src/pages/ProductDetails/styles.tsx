@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const ContainerProductDetails = styled.section`
+export const ContainerProductDetails = styled.div`
   background: #F5F5F5;
   display: flex;
   flex-flow: row wrap;
@@ -11,7 +11,20 @@ export const ContainerProductDetails = styled.section`
 
 export const SectionProduct = styled.section`
   padding: 20px 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const WrapperPanelProduct = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 40%;
+
+  img {
+    margin: 0 35px;
+  }
 `;
 
 export const LinkToBack = styled(Link)`
@@ -24,7 +37,6 @@ export const PanelProduct = styled.div`
   align-items: center;
   background: white;
   box-shadow: 0px 4px 15px 0px #00000040;
-  width: 450px;
   height: 516px;
   padding: 0 15px;
   margin: 20px 35px;

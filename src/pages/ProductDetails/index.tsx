@@ -1,24 +1,10 @@
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
 import { ProductType } from '../../types';
-import iconBack from '../../images/Voltar.png';
-import {
-  ContainerProductDetails,
-  ItemList,
-  LinkToBack,
-  ListDetails,
-  PanelProduct,
-  ProductImage,
-  ProductName,
-  SectionDetails,
-  SectionProduct,
-  TitleProductDetails,
-  ButtonAddCart,
-  WrapperButton,
-} from './styles';
+import { ContainerProductDetails } from './styles';
+import SectionProductDetails from './Details';
 
-//
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductType>();
@@ -47,54 +33,10 @@ function ProductDetails() {
   return (
     <ContainerProductDetails>
       {product ? (
-        <>
-          <SectionProduct>
-            <LinkToBack to="/">
-              <img src={ iconBack } alt="Voltar" />
-            </LinkToBack>
-            <PanelProduct>
-              <ProductName data-testid="product-detail-name">
-                {product.title}
-              </ProductName>
-              <ProductImage
-                data-testid="product-detail-image"
-                src={ product.thumbnail }
-                alt={ product.title }
-              />
-            </PanelProduct>
-          </SectionProduct>
-          <SectionDetails>
-            <TitleProductDetails>Especificações técnicas</TitleProductDetails>
-            <ListDetails>
-              {product.attributes.map((attribute) => (
-                <ItemList
-                  key={ attribute.name }
-                >
-                  { attribute.name }
-                  :
-                  {' '}
-                  { attribute.value_name }
-                </ItemList>
-              ))}
-            </ListDetails>
-
-            <WrapperButton>
-              <p data-testid="product-detail-price">
-                R$
-              </p>
-              <p className="price">
-                {product.price}
-              </p>
-
-              <ButtonAddCart
-                data-testid="product-detail-add-to-cart"
-                onClick={ () => handleAddToCart(product) }
-              >
-                Adicionar ao Carrinho
-              </ButtonAddCart>
-            </WrapperButton>
-          </SectionDetails>
-        </>
+        <SectionProductDetails
+          product={ product }
+          handleAddCart={ handleAddToCart }
+        />
       ) : (
         <p>Loading...</p>
       )}
